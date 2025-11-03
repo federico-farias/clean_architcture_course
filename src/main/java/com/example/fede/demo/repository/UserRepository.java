@@ -1,16 +1,11 @@
 package com.example.fede.demo.repository;
 
 import com.example.fede.demo.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.List;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository {
     
     Optional<User> findByUsername(String username);
     
@@ -20,9 +15,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
     boolean existsByEmail(String email);
     
-    @Query("SELECT u FROM User u WHERE u.enabled = true")
     List<User> findAllActiveUsers();
     
-    @Query("SELECT u FROM User u WHERE u.firstName LIKE %:name% OR u.lastName LIKE %:name%")
-    List<User> findByName(@Param("name") String name);
+    List<User> findByName(String name);
+
+    User save(User user);
 }

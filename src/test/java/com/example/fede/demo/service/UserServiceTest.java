@@ -80,4 +80,16 @@ class UserServiceTest {
         verify(userRepository, times(1)).save(any(User.class));
     }
 
+    @Test
+    void registerUser_ShouldRaiseExceptionWhenUserNameIsNull() {
+        // Dado
+        validRegistrationDto.setUsername(null);
+
+        IllegalArgumentException exception = assertThrows(
+            IllegalArgumentException.class,
+            () -> userService.registerUser(validRegistrationDto)
+        );
+        assertEquals("El nombre de usuario no puede ser nulo o vacío", exception.getMessage());
+    }
+
 }
