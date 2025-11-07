@@ -1,4 +1,4 @@
-package com.example.fede.demo.exception;
+package com.example.fede.demo;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

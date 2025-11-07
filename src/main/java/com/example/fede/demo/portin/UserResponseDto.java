@@ -1,4 +1,4 @@
-package com.example.fede.demo.dto;
+package com.example.fede.demo.portin;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

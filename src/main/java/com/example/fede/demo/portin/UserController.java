@@ -1,18 +1,13 @@
-package com.example.fede.demo.controller;
+package com.example.fede.demo.portin;
 
-import com.example.fede.demo.dto.UserRegistrationCommand;
-import com.example.fede.demo.dto.UserRegistrationDto;
-import com.example.fede.demo.dto.UserRegistrationResponse;
-import com.example.fede.demo.dto.UserResponseDto;
-import com.example.fede.demo.service.UserService;
+import com.example.fede.demo.application.UserRegistrationCommand;
+import com.example.fede.demo.application.UserRegistrationResponse;
+import com.example.fede.demo.application.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")

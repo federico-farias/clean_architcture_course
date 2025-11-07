@@ -1,7 +1,7 @@
-package com.example.fede.demo.repository;
+package com.example.fede.demo.portout;
 
-import com.example.fede.demo.model.User;
-import com.example.fede.demo.model.UserEntity;
+import com.example.fede.demo.application.User;
+import com.example.fede.demo.application.UserRepository;
 
 import java.util.List;
 import java.util.Optional;

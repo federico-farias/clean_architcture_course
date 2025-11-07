@@ -1,8 +1,8 @@
-package com.example.fede.demo.config;
+package com.example.fede.demo;
 
-import com.example.fede.demo.repository.UserRepositoryDelegate;
-import com.example.fede.demo.repository.UserRepositorySpringData;
-import com.example.fede.demo.service.UserService;
+import com.example.fede.demo.portout.UserRepositoryDelegate;
+import com.example.fede.demo.portout.UserRepositorySpringData;
+import com.example.fede.demo.application.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

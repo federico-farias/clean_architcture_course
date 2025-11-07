@@ -1,4 +1,4 @@
-package com.example.fede.demo.model;
+package com.example.fede.demo.portout;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

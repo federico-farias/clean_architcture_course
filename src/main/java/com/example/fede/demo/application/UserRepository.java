@@ -1,6 +1,4 @@
-package com.example.fede.demo.repository;
-
-import com.example.fede.demo.model.User;
+package com.example.fede.demo.application;
 
 import java.util.Optional;
 import java.util.List;

@@ -1,9 +1,10 @@
 package com.example.fede.demo.service;
 
-import com.example.fede.demo.dto.UserRegistrationDto;
-import com.example.fede.demo.dto.UserResponseDto;
-import com.example.fede.demo.model.User;
-import com.example.fede.demo.repository.UserRepository;
+import com.example.fede.demo.application.UserService;
+import com.example.fede.demo.portin.UserRegistrationDto;
+import com.example.fede.demo.portin.UserResponseDto;
+import com.example.fede.demo.application.User;
+import com.example.fede.demo.application.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

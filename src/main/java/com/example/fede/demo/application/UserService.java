@@ -1,9 +1,4 @@
-package com.example.fede.demo.service;
-
-import com.example.fede.demo.dto.UserRegistrationCommand;
-import com.example.fede.demo.dto.UserRegistrationResponse;
-import com.example.fede.demo.model.User;
-import com.example.fede.demo.repository.UserRepository;
+package com.example.fede.demo.application;
 
 public class UserService {// Application
     
