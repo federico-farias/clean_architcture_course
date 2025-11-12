@@ -1,7 +1,7 @@
 package com.example.fede.demo.application;
 
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository {
     

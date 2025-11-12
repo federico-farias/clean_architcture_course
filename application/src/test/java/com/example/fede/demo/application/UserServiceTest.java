@@ -1,10 +1,5 @@
-package com.example.fede.demo.service;
+package com.example.fede.demo.application;
 
-import com.example.fede.demo.application.UserService;
-import com.example.fede.demo.portin.UserRegistrationDto;
-import com.example.fede.demo.portin.UserResponseDto;
-import com.example.fede.demo.application.User;
-import com.example.fede.demo.application.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,13 +22,13 @@ class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
-    private UserRegistrationDto validRegistrationDto;
+    private UserRegistrationCommand validRegistrationDto;
     private User savedUser;
 
     @BeforeEach
     void setUp() {
         // Preparar datos de prueba
-        validRegistrationDto = new UserRegistrationDto(
+        validRegistrationDto = new UserRegistrationCommand(
                 "testuser",
                 "test@example.com",
                 "password123",
@@ -63,7 +58,7 @@ class UserServiceTest {
         when(userRepository.save(any(User.class))).thenReturn(savedUser);
 
         // Cuando
-        UserResponseDto result = userService.registerUser(validRegistrationDto);
+        UserRegistrationResponse result = userService.registerUser(validRegistrationDto);
 
         // Entonces
         assertNotNull(result);
@@ -87,8 +82,8 @@ class UserServiceTest {
         validRegistrationDto.setUsername(null);
 
         IllegalArgumentException exception = assertThrows(
-            IllegalArgumentException.class,
-            () -> userService.registerUser(validRegistrationDto)
+                IllegalArgumentException.class,
+                () -> userService.registerUser(validRegistrationDto)
         );
         assertEquals("El nombre de usuario no puede ser nulo o vacío", exception.getMessage());
     }

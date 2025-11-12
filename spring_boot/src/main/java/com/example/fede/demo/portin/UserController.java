@@ -22,7 +22,7 @@ public class UserController {
     }
     
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegistrationDto registrationDto) {
+    public ResponseEntity<?> registerUser(@RequestBody UserRegistrationDto registrationDto) {
         try {
             UserRegistrationCommand command = new UserRegistrationCommand(
                     registrationDto.getUsername(),
@@ -46,8 +46,9 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ErrorResponse("Error interno del servidor"));
+                    .body(new ErrorResponse("Error interno del servidor: " + e.getMessage()));
         }
     }
     
