@@ -28,5 +28,4 @@ public class User {
     private LocalDateTime updatedAt;
     
     private boolean enabled = true;
-
 }

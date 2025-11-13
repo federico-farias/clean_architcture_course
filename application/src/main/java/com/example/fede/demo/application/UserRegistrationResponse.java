@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRegistrationResponse {
+
     private Long id;
     private String username;
     private String email;
@@ -17,4 +18,5 @@ public class UserRegistrationResponse {
     private String lastName;
     private LocalDateTime createdAt;
     private boolean enabled;
+
 }
