@@ -2,27 +2,19 @@ package com.example.fede.demo.application;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
-    @Mock
     private UserRepository userRepository;
 
-    @InjectMocks
     private UserService userService;
 
     private UserRegistrationCommand validRegistrationDto;
+
     private User savedUser;
 
     @BeforeEach
@@ -53,9 +45,34 @@ class UserServiceTest {
     @Test
     void registerUser_HappyPath_ShouldReturnUserResponseDto() {
         // Dado
-        when(userRepository.existsByUsername("testuser")).thenReturn(false);
-        when(userRepository.existsByEmail("test@example.com")).thenReturn(false);
-        when(userRepository.save(any(User.class))).thenReturn(savedUser);
+        userRepository = new InMemoryStubUserRepository() {
+
+            @Override
+            public boolean existsByUsername(String username) {
+                this.existsByUsernameCounter++;
+                return !"testuser".equals(username);
+            }
+
+            @Override
+            public boolean existsByEmail(String email) {
+                this.existsByEmailCounter++;
+                return !"test@example.com".equals(email);
+            }
+
+            @Override
+            public User save(User user) {
+                this.saveCounter++;
+                user.setId(1L);
+                user.setCreatedAt(LocalDateTime.now());
+                return user;
+            }
+
+            public void saveVerify(int times) {
+                assertEquals(times, this.saveCounter, "El método save debería ser llamado una vez");
+            }
+
+        };
+        this.userService = new UserService(this.userRepository);
 
         // Cuando
         UserRegistrationResponse result = userService.registerUser(validRegistrationDto);
@@ -71,14 +88,18 @@ class UserServiceTest {
         assertNotNull(result.getCreatedAt());
 
         // Verify: Verificar que se llamaron los métodos esperados
-        verify(userRepository, times(1)).existsByUsername("testuser");
-        verify(userRepository, times(1)).existsByEmail("test@example.com");
-        verify(userRepository, times(1)).save(any(User.class));
+        InMemoryStubUserRepository verifier = (InMemoryStubUserRepository) userRepository;
+        verifier.existsByUsernameVerifier(1);
+        verifier.existsByEmailVerifier(1);
+        verifier.saveVerify(1);
     }
 
     @Test
     void registerUser_ShouldRaiseExceptionWhenUserNameIsNull() {
         // Dado
+        userRepository = new InMemoryStubUserRepository() {};
+        this.userService = new UserService(this.userRepository);
+
         validRegistrationDto.setUsername(null);
 
         IllegalArgumentException exception = assertThrows(
