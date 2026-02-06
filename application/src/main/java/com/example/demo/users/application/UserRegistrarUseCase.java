@@ -3,15 +3,15 @@ package com.example.demo.users.application;
 import com.example.demo.users.domain.User;
 import com.example.demo.users.domain.UserRepository;
 
-public class UserService {// Application
+public class UserRegistrarUseCase {// Application
     
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserRegistrarUseCase(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
     
-    public UserRegistrationResponse registerUser(UserRegistrationCommand registrationDto) {
+    public UserRegistrarResponse register(UserRegistrarCommand registrationDto) {
         if (registrationDto.getUsername() == null || registrationDto.getUsername().isEmpty()) {
             throw new IllegalArgumentException("El nombre de usuario no puede ser nulo o vacío");
         }
@@ -63,8 +63,8 @@ public class UserService {// Application
         return convertToResponseDto(savedUser);
     }
     
-    private UserRegistrationResponse convertToResponseDto(User user) {
-        return new UserRegistrationResponse(
+    private UserRegistrarResponse convertToResponseDto(User user) {
+        return new UserRegistrarResponse(
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),

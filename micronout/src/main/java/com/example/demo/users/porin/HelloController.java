@@ -15,9 +15,9 @@
  */
 package com.example.demo.users.porin;
 
-import com.example.demo.users.application.UserRegistrationCommand;
-import com.example.demo.users.application.UserRegistrationResponse;
-import com.example.demo.users.application.UserService;
+import com.example.demo.users.application.UserRegistrarCommand;
+import com.example.demo.users.application.UserRegistrarResponse;
+import com.example.demo.users.application.UserRegistrarUseCase;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
@@ -25,17 +25,17 @@ import io.micronaut.http.annotation.*;
 @Controller("/hello") // <1>
 public class HelloController {
 
-    private UserService userService;
+    private UserRegistrarUseCase userRegistrarUseCase;
 
-    public HelloController(UserService userService) {
-        this.userService = userService;
+    public HelloController(UserRegistrarUseCase userRegistrarUseCase) {
+        this.userRegistrarUseCase = userRegistrarUseCase;
     }
 
     @Post // <2>
     @Produces(MediaType.APPLICATION_JSON) // <3>
     public HttpResponse<?> index(@Body UserRegistrationDto registrationDto) {
         try {
-            UserRegistrationCommand command = new UserRegistrationCommand(
+            UserRegistrarCommand command = new UserRegistrarCommand(
                     registrationDto.getUsername(),
                     registrationDto.getEmail(),
                     registrationDto.getPassword(),
@@ -43,7 +43,7 @@ public class HelloController {
                     registrationDto.getFirstName(),
                     registrationDto.getLastName()
             );
-            UserRegistrationResponse resultCommand = userService.registerUser(command);
+            UserRegistrarResponse resultCommand = userRegistrarUseCase.register(command);
             UserResponseDto userResponse = new UserResponseDto(
                     resultCommand.getId(),
                     resultCommand.getUsername(),

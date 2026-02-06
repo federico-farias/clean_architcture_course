@@ -1,8 +1,8 @@
 package com.example.demo.users.infrastructure.portin;
 
-import com.example.demo.users.application.UserRegistrationCommand;
-import com.example.demo.users.application.UserRegistrationResponse;
-import com.example.demo.users.application.UserService;
+import com.example.demo.users.application.UserRegistrarCommand;
+import com.example.demo.users.application.UserRegistrarResponse;
+import com.example.demo.users.application.UserRegistrarUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 public class UserController {
     
-    private final UserService userService;
+    private final UserRegistrarUseCase userRegistrarUseCase;
     
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserRegistrarUseCase userRegistrarUseCase) {
+        this.userRegistrarUseCase = userRegistrarUseCase;
     }
     
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserRegistrationDto registrationDto) {
         try {
-            UserRegistrationCommand command = new UserRegistrationCommand(
+            UserRegistrarCommand command = new UserRegistrarCommand(
                     registrationDto.getUsername(),
                     registrationDto.getEmail(),
                     registrationDto.getPassword(),
@@ -31,7 +31,7 @@ public class UserController {
                     registrationDto.getFirstName(),
                     registrationDto.getLastName()
             );
-            UserRegistrationResponse resultCommand = userService.registerUser(command);
+            UserRegistrarResponse resultCommand = userRegistrarUseCase.register(command);
             UserResponseDto userResponse = new UserResponseDto(
                     resultCommand.getId(),
                     resultCommand.getUsername(),

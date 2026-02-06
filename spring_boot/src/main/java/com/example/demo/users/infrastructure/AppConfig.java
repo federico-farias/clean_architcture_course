@@ -2,7 +2,7 @@ package com.example.demo.users.infrastructure;
 
 import com.example.demo.users.infrastructure.portout.UserRepositoryDelegate;
 import com.example.demo.users.infrastructure.portout.UserRepositorySpringData;
-import com.example.demo.users.application.UserService;
+import com.example.demo.users.application.UserRegistrarUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
 
     @Bean
-    public UserService userService(UserRepositorySpringData repositorySpringData) {
-        return new UserService(new UserRepositoryDelegate(repositorySpringData));
+    public UserRegistrarUseCase userService(UserRepositorySpringData repositorySpringData) {
+        return new UserRegistrarUseCase(new UserRepositoryDelegate(repositorySpringData));
     }
 
 }

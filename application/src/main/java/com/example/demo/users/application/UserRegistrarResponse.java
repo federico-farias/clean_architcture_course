@@ -1,23 +1,36 @@
 package com.example.demo.users.application;
 
-public class UserRegistrationCommand {
+import java.time.LocalDateTime;
+
+public class UserRegistrarResponse {
+
+    private Long id;
     private String username;
     private String email;
-    private String password;
-    private String confirmPassword;
     private String firstName;
     private String lastName;
+    private LocalDateTime createdAt;
+    private boolean enabled;
 
-    public UserRegistrationCommand() {
+    public UserRegistrarResponse() {
     }
 
-    public UserRegistrationCommand(String username, String email, String password, String confirmPassword, String firstName, String lastName) {
+    public UserRegistrarResponse(Long id, String username, String email, String firstName, String lastName, LocalDateTime createdAt, boolean enabled) {
+        this.id = id;
         this.username = username;
         this.email = email;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.createdAt = createdAt;
+        this.enabled = enabled;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -36,22 +49,6 @@ public class UserRegistrationCommand {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -66,5 +63,21 @@ public class UserRegistrationCommand {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

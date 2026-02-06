@@ -1,8 +1,8 @@
 package com.example.fede.demo.application;
 
-import com.example.demo.users.application.UserRegistrationCommand;
-import com.example.demo.users.application.UserRegistrationResponse;
-import com.example.demo.users.application.UserService;
+import com.example.demo.users.application.UserRegistrarCommand;
+import com.example.demo.users.application.UserRegistrarResponse;
+import com.example.demo.users.application.UserRegistrarUseCase;
 import com.example.demo.users.domain.User;
 import com.example.demo.users.domain.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,20 +12,20 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserServiceTest {
+class UserRegistrarUseCaseTest {
 
     private UserRepository userRepository;
 
-    private UserService userService;
+    private UserRegistrarUseCase userRegistrarUseCase;
 
-    private UserRegistrationCommand validRegistrationDto;
+    private UserRegistrarCommand validRegistrationDto;
 
     private User savedUser;
 
     @BeforeEach
     void setUp() {
         // Preparar datos de prueba
-        validRegistrationDto = new UserRegistrationCommand(
+        validRegistrationDto = new UserRegistrarCommand(
                 "testuser",
                 "test@example.com",
                 "password123",
@@ -48,7 +48,7 @@ class UserServiceTest {
     }
 
     @Test
-    void registerUser_HappyPath_ShouldReturnUserResponseDto() {
+    void registerUser_HappyPath_ShouldReturnResponseDto() {
         // Dado
         userRepository = new InMemoryStubUserRepository() {
 
@@ -77,10 +77,10 @@ class UserServiceTest {
             }
 
         };
-        this.userService = new UserService(this.userRepository);
+        this.userRegistrarUseCase = new UserRegistrarUseCase(this.userRepository);
 
         // Cuando
-        UserRegistrationResponse result = userService.registerUser(validRegistrationDto);
+        UserRegistrarResponse result = userRegistrarUseCase.register(validRegistrationDto);
 
         // Entonces
         assertNotNull(result);
@@ -100,16 +100,16 @@ class UserServiceTest {
     }
 
     @Test
-    void registerUser_ShouldRaiseExceptionWhenUserNameIsNull() {
+    void registerUser_ShouldRaiseExceptionWhenNameIsNull() {
         // Dado
         userRepository = new InMemoryStubUserRepository() {};
-        this.userService = new UserService(this.userRepository);
+        this.userRegistrarUseCase = new UserRegistrarUseCase(this.userRepository);
 
         validRegistrationDto.setUsername(null);
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> userService.registerUser(validRegistrationDto)
+                () -> userRegistrarUseCase.register(validRegistrationDto)
         );
         assertEquals("El nombre de usuario no puede ser nulo o vacío", exception.getMessage());
     }
