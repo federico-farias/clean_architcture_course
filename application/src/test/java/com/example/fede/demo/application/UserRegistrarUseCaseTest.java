@@ -3,12 +3,12 @@ package com.example.fede.demo.application;
 import com.example.demo.users.application.UserRegistrarCommand;
 import com.example.demo.users.application.UserRegistrarResponse;
 import com.example.demo.users.application.UserRegistrarUseCase;
-import com.example.demo.users.domain.User;
-import com.example.demo.users.domain.UserRepository;
+import com.example.demo.users.domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,14 +35,17 @@ class UserRegistrarUseCaseTest {
         );
 
         // Simular el usuario guardado que retornaría el repositorio
-        savedUser = new User();
-        savedUser.setId(1L);
-        savedUser.setUsername("testuser");
-        savedUser.setEmail("test@example.com");
-        savedUser.setPassword("password123");
-        savedUser.setFirstName("John");
-        savedUser.setLastName("Doe");
-        savedUser.setEnabled(true);
+        savedUser = new User(
+                new UserId(UUID.randomUUID().toString()),
+                new UserName("testuser"),
+                new UserEmail("test@example.com"),
+                new UserPassword("password123", "password123"),
+                new UserFirstName("John"),
+                new UserLastName("Doe"),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                true
+        );
         // Simular que @PrePersist ya fue llamado
         savedUser.setCreatedAt(LocalDateTime.now());
     }
@@ -53,21 +56,21 @@ class UserRegistrarUseCaseTest {
         userRepository = new InMemoryStubUserRepository() {
 
             @Override
-            public boolean existsByUsername(String username) {
+            public boolean existsByUsername(UserName username) {
                 this.existsByUsernameCounter++;
-                return !"testuser".equals(username);
+                return !"testuser".equals(username.getValue());
             }
 
             @Override
-            public boolean existsByEmail(String email) {
+            public boolean existsByEmail(UserEmail email) {
                 this.existsByEmailCounter++;
-                return !"test@example.com".equals(email);
+                return !"test@example.com".equals(email.getValue());
             }
 
             @Override
             public User save(User user) {
                 this.saveCounter++;
-                user.setId(1L);
+                user.setId(new UserId(UUID.randomUUID().toString()));
                 user.setCreatedAt(LocalDateTime.now());
                 return user;
             }
@@ -107,8 +110,8 @@ class UserRegistrarUseCaseTest {
 
         validRegistrationDto.setUsername(null);
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
+        BusinessException exception = assertThrows(
+                BusinessException.class,
                 () -> userRegistrarUseCase.register(validRegistrationDto)
         );
         assertEquals("El nombre de usuario no puede ser nulo o vacío", exception.getMessage());

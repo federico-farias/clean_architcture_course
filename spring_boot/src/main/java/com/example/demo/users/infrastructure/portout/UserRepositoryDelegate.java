@@ -1,6 +1,8 @@
 package com.example.demo.users.infrastructure.portout;
 
 import com.example.demo.users.domain.User;
+import com.example.demo.users.domain.UserEmail;
+import com.example.demo.users.domain.UserName;
 import com.example.demo.users.domain.UserRepository;
 
 import java.util.List;
@@ -25,13 +27,13 @@ public class UserRepositoryDelegate implements UserRepository {
     }
 
     @Override
-    public boolean existsByUsername(String username) {
-        return repository.existsByUsername(username);
+    public boolean existsByUsername(UserName username) {
+        return repository.existsByUsername(username.getValue());
     }
 
     @Override
-    public boolean existsByEmail(String email) {
-        return repository.existsByEmail(email);
+    public boolean existsByEmail(UserEmail email) {
+        return repository.existsByEmail(email.getValue());
     }
 
     @Override
@@ -47,14 +49,14 @@ public class UserRepositoryDelegate implements UserRepository {
     @Override
     public User save(User user) {
         UserEntity entity = new UserEntity(
-               user.getUsername(),
-               user.getEmail(),
-               user.getPassword(),
-               user.getFirstName(),
-               user.getLastName()
+               user.getUsername().getValue(),
+               user.getEmail().getValue(),
+               user.getPassword().getPassword(),
+               user.getFirstName().getValue(),
+               user.getLastName().getValue()
         );
         UserEntity entitySaved = repository.save(entity);
-        user.setId(entitySaved.getId());
+        //user.setId(entitySaved.getId()); // TODO: cambiar Long id por UUID
         return user;
     }
 }

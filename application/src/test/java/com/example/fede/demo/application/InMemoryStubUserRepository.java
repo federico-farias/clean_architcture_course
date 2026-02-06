@@ -1,6 +1,8 @@
 package com.example.fede.demo.application;
 
 import com.example.demo.users.domain.User;
+import com.example.demo.users.domain.UserEmail;
+import com.example.demo.users.domain.UserName;
 import com.example.demo.users.domain.UserRepository;
 
 import java.util.List;
@@ -12,21 +14,6 @@ public abstract class InMemoryStubUserRepository implements UserRepository {
     protected int existsByEmailCounter;
     protected int existsByUsernameCounter;
 
-    @Override
-    public Optional<User> findByUsername(String username) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<User> findByEmail(String email) {
-        return Optional.empty();
-    }
-
-    @Override
-    public boolean existsByUsername(String username) {
-        return false;
-    }
-
     public void existsByUsernameVerifier(int times) {
         if (this.existsByUsernameCounter != times) {
             throw new AssertionError("Expected existsByUsername to be called " + times + " times, but was called " + this.existsByUsernameCounter + " times.");
@@ -34,18 +21,13 @@ public abstract class InMemoryStubUserRepository implements UserRepository {
     }
 
     @Override
-    public boolean existsByEmail(String email) {
+    public boolean existsByUsername(UserName username) {
         return false;
     }
 
     @Override
-    public List<User> findAllActiveUsers() {
-        return List.of();
-    }
-
-    @Override
-    public List<User> findByName(String name) {
-        return List.of();
+    public boolean existsByEmail(UserEmail email) {
+        return false;
     }
 
     @Override

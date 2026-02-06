@@ -1,6 +1,8 @@
 package com.example.demo.users.infrastructure.portout;
 
 import com.example.demo.users.domain.User;
+import com.example.demo.users.domain.UserEmail;
+import com.example.demo.users.domain.UserName;
 import com.example.demo.users.domain.UserRepository;
 import jakarta.inject.Singleton;
 
@@ -21,12 +23,12 @@ public class MemoryUserRepository implements UserRepository {
     }
 
     @Override
-    public boolean existsByUsername(String username) {
+    public boolean existsByUsername(UserName username) {
         return false;
     }
 
     @Override
-    public boolean existsByEmail(String email) {
+    public boolean existsByEmail(UserEmail email) {
         return false;
     }
 

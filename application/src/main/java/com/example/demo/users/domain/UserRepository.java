@@ -4,18 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
+
+    boolean existsByUsername(UserName username);
     
-    Optional<User> findByUsername(String username);
-    
-    Optional<User> findByEmail(String email);
-    
-    boolean existsByUsername(String username);
-    
-    boolean existsByEmail(String email);
-    
-    List<User> findAllActiveUsers();
-    
-    List<User> findByName(String name);
+    boolean existsByEmail(UserEmail email);
 
     User save(User user);
+
 }

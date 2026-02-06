@@ -1,20 +1,23 @@
 package com.example.demo.users.domain;
 
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
+@Data
 public class User {
     
-    private Long id;
+    private UserId id;
     
-    private String username;
+    private UserName username;
     
-    private String email;
+    private UserEmail email;
     
-    private String password;
+    private UserPassword password;
     
-    private String firstName;
+    private UserFirstName firstName;
     
-    private String lastName;
+    private UserLastName lastName;
     
     private LocalDateTime createdAt;
     
@@ -22,10 +25,17 @@ public class User {
     
     private boolean enabled = true;
 
-    public User() {
-    }
-
-    public User(Long id, String username, String email, String password, String firstName, String lastName, LocalDateTime createdAt, LocalDateTime updatedAt, boolean enabled) {
+    public User(
+            UserId id,
+            UserName username,
+            UserEmail email,
+            UserPassword password,
+            UserFirstName firstName,
+            UserLastName lastName,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt,
+            boolean enabled
+    ) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -37,75 +47,25 @@ public class User {
         this.enabled = enabled;
     }
 
-    public Long getId() {
-        return id;
+    public static User create(
+            UserName userName,
+            UserEmail userEmail,
+            UserPassword userPassword,
+            UserFirstName userFirstName,
+            UserLastName userLastName
+    ) {
+        User user = new User(
+                new UserId(),
+                userName,
+                userEmail,
+                userPassword,
+                userFirstName,
+                userLastName,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                true
+        );
+        return user;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
 }
