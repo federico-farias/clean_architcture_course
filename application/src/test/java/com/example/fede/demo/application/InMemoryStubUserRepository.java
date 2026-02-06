@@ -1,5 +1,8 @@
 package com.example.fede.demo.application;
 
+import com.example.demo.users.domain.User;
+import com.example.demo.users.domain.UserRepository;
+
 import java.util.List;
 import java.util.Optional;
 

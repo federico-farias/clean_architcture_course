@@ -1,5 +1,10 @@
 package com.example.fede.demo.application;
 
+import com.example.demo.users.application.UserRegistrationCommand;
+import com.example.demo.users.application.UserRegistrationResponse;
+import com.example.demo.users.application.UserService;
+import com.example.demo.users.domain.User;
+import com.example.demo.users.domain.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
