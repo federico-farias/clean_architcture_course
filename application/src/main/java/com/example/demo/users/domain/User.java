@@ -1,11 +1,12 @@
 package com.example.demo.users.domain;
 
-import lombok.Data;
+import com.example.demo.shared.RootAggregate;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Data
-public class User {
+@Getter
+public class User extends RootAggregate {
     
     private UserId id;
     
@@ -22,6 +23,8 @@ public class User {
     private LocalDateTime createdAt;
     
     private LocalDateTime updatedAt;
+
+    private boolean active = false;
     
     private boolean enabled = true;
 
@@ -34,6 +37,7 @@ public class User {
             UserLastName lastName,
             LocalDateTime createdAt,
             LocalDateTime updatedAt,
+            boolean active,
             boolean enabled
     ) {
         this.id = id;
@@ -44,6 +48,7 @@ public class User {
         this.lastName = lastName;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.active = active;
         this.enabled = enabled;
     }
 
@@ -63,9 +68,29 @@ public class User {
                 userLastName,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
+                false,
                 true
         );
+        UserCreatedEvent event = new UserCreatedEvent(
+                user.getId().getValue(),
+                user.getUsername().getValue(),
+                user.getEmail().getValue()
+        );
+        user.record(event);
         return user;
+    }
+
+    public void changePassword(String oldPassword, String newPassword) {
+        if (!this.password.getValue().equals(oldPassword)) {
+            throw new BusinessException("Old password does not match.");
+        }
+        this.password = new UserPassword(newPassword);
+        this.updatedAt = LocalDateTime.now();
+        UserPasswordChangedEvent event = new UserPasswordChangedEvent(
+                this.id.getValue(),
+                this.username.getValue()
+        );
+        this.record(event);
     }
 
 }

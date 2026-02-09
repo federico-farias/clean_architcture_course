@@ -5,8 +5,6 @@ import com.example.demo.users.domain.UserEmail;
 import com.example.demo.users.domain.UserName;
 import com.example.demo.users.domain.UserRepository;
 
-import java.util.List;
-import java.util.Optional;
 
 public class UserRepositoryDelegate implements UserRepository {
 
@@ -14,16 +12,6 @@ public class UserRepositoryDelegate implements UserRepository {
 
     public UserRepositoryDelegate(UserRepositorySpringData repository) {
         this.repository = repository;
-    }
-
-    @Override
-    public Optional<User> findByUsername(String username) {
-        return repository.findByUsername(username);
-    }
-
-    @Override
-    public Optional<User> findByEmail(String email) {
-        return repository.findByEmail(email);
     }
 
     @Override
@@ -37,26 +25,14 @@ public class UserRepositoryDelegate implements UserRepository {
     }
 
     @Override
-    public List<User> findAllActiveUsers() {
-        return repository.findAllActiveUsers();
-    }
-
-    @Override
-    public List<User> findByName(String name) {
-        return repository.findByName(name);
-    }
-
-    @Override
-    public User save(User user) {
+    public void save(User user) {
         UserEntity entity = new UserEntity(
                user.getUsername().getValue(),
                user.getEmail().getValue(),
-               user.getPassword().getPassword(),
+               user.getPassword().getValue(),
                user.getFirstName().getValue(),
                user.getLastName().getValue()
         );
-        UserEntity entitySaved = repository.save(entity);
-        //user.setId(entitySaved.getId()); // TODO: cambiar Long id por UUID
-        return user;
+        repository.save(entity);
     }
 }

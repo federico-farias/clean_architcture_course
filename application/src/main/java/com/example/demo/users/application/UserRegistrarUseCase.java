@@ -1,13 +1,16 @@
 package com.example.demo.users.application;
 
+import com.example.demo.shared.DomainEventPublisher;
 import com.example.demo.users.domain.*;
 
 public class UserRegistrarUseCase {// Application
     
     private final UserRepository userRepository;
+    private final DomainEventPublisher domainEventPublisher;
 
-    public UserRegistrarUseCase(UserRepository userRepository) {
+    public UserRegistrarUseCase(UserRepository userRepository, DomainEventPublisher domainEventPublisher) {
         this.userRepository = userRepository;
+        this.domainEventPublisher = domainEventPublisher;
     }
     
     public UserRegistrarResponse register(UserRegistrarCommand registrationDto) {
@@ -26,25 +29,23 @@ public class UserRegistrarUseCase {// Application
             throw new IllegalArgumentException("El email ya está registrado");
         }
 
+        user.changePassword("d@1wdEwdew", "x@1wdEwdew");
+
         // Guardar usuario
-        User savedUser = userRepository.save(user);
-        
-        // Convertir a DTO y retornar
-        return convertToResponseDto(savedUser);
+        userRepository.save(user);
+        this.domainEventPublisher.publish(user.pullEvents());
+        return convertToResponseDto(user);
     }
     
     private UserRegistrarResponse convertToResponseDto(User user) {
-        /*
         return new UserRegistrarResponse(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getFirstName(),
-                user.getLastName(),
+                user.getId().getValue(),
+                user.getUsername().getValue(),
+                user.getEmail().getValue(),
+                user.getFirstName().getValue(),
+                user.getLastName().getValue(),
                 user.getCreatedAt(),
                 user.isEnabled()
         );
-         */
-        return null;
     }
 }

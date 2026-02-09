@@ -7,17 +7,17 @@ import java.util.UUID;
 @Getter
 public class UserId {
 
-    private final String id;
+    private final String value;
 
-    public UserId(String id) {
-        if  (id == null) {
+    public UserId(String value) {
+        if  (value == null) {
             throw new IllegalArgumentException("UserId cannot be null");
         }
-        this.id = id;
+        this.value = value;
     }
 
     public UserId(){
-        this.id = UUID.randomUUID().toString();
+        this.value = UUID.randomUUID().toString();
     }
 
 }

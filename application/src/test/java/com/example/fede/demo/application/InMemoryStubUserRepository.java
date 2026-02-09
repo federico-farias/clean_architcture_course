@@ -31,8 +31,7 @@ public abstract class InMemoryStubUserRepository implements UserRepository {
     }
 
     @Override
-    public User save(User user) {
-        return null;
+    public void save(User user) {
     }
 
     public void existsByEmailVerifier(int times) {

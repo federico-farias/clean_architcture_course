@@ -10,8 +10,9 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
 
     @Bean
-    public UserRegistrarUseCase userService(UserRepositorySpringData repositorySpringData) {
-        return new UserRegistrarUseCase(new UserRepositoryDelegate(repositorySpringData));
+    public UserRegistrarUseCase userService(UserRepositorySpringData repositorySpringData, DomainEventPublisherImpl domainEventPublisher) {
+        // TODO: Implementar un DomainEventPublisher real y pasarlo al constructor
+        return new UserRegistrarUseCase(new UserRepositoryDelegate(repositorySpringData), domainEventPublisher);
     }
 
 }

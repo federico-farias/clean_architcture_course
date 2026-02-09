@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class UserRegistrarResponse {
 
-    private Long id;
+    private String id;
     private String username;
     private String email;
     private String firstName;
@@ -15,7 +15,7 @@ public class UserRegistrarResponse {
     public UserRegistrarResponse() {
     }
 
-    public UserRegistrarResponse(Long id, String username, String email, String firstName, String lastName, LocalDateTime createdAt, boolean enabled) {
+    public UserRegistrarResponse(String id, String username, String email, String firstName, String lastName, LocalDateTime createdAt, boolean enabled) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -25,11 +25,11 @@ public class UserRegistrarResponse {
         this.enabled = enabled;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
